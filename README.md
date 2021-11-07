@@ -21,12 +21,13 @@ This application is an e-commerce platform built with a refractored code using R
 &nbsp;
 
 ![Screenshot](assets/screenshot.png)
+
 &nbsp;
 
 
 
 ## Deployed Site
-
+https://redux-state-wk.herokuapp.com/
 
 
 
