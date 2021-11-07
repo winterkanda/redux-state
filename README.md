@@ -18,7 +18,9 @@ This application is an e-commerce platform built with a refractored code using R
 &nbsp;
 
 ## Sneak Peek
-<!-- ![Screenshot](assets/screenshot.png) -->
+&nbsp;
+
+![Screenshot](assets/screenshot.png)
 &nbsp;
 
 

@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
+import { useDispatch, useSelector } from "react-redux";
 
 import ProductItem from '../ProductItem';
 import { QUERY_PRODUCTS } from '../../utils/queries';
 import spinner from '../../assets/spinner.gif';
 
-function ProductList({ currentCategory }) {
-  const { loading, data } = useQuery(QUERY_PRODUCTS);
+import { UPDATE_PRODUCTS } from '../../utils/actions';
 
-  const products = data?.products || [];
+function ProductList() {
+  const dispatch = useDispatch();
+  const { loading, data } = useQuery(QUERY_PRODUCTS);
+  const currentCategory = useSelector(state => state.currentCategory)
+  const products = useSelector(state => state.products)
+  useEffect(() => {
+    const productsFromQuery = data?.products || [];
+        dispatch({type: UPDATE_PRODUCTS, products:productsFromQuery})
+    
+  }, [data])
 
   function filterProducts() {
     if (!currentCategory) {

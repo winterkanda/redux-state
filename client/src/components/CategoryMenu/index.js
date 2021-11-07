@@ -1,10 +1,22 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
-import { QUERY_CATEGORIES } from '../../utils/queries';
+import React, {useEffect} from "react"; 
+import { useDispatch, useSelector } from "react-redux";
+import { useQuery } from "@apollo/client";
+import { QUERY_CATEGORIES } from "../../utils/queries";
+import { UPDATE_CATEGORIES, UPDATE_CURRENT_CATEGORY } from "../../utils/actions";
 
-function CategoryMenu({ setCategory }) {
+function CategoryMenu() {
   const { data: categoryData } = useQuery(QUERY_CATEGORIES);
-  const categories = categoryData?.categories || [];
+  const dispatch = useDispatch();
+  const categories = useSelector(state => state.categories);
+
+  useEffect(() => {
+    const categories = categoryData?.categories || [];
+    dispatch({ type: UPDATE_CATEGORIES, categories: categories });
+  }, [categoryData]);
+
+  const handleCategoryClick = (id) => {
+    dispatch({ type: UPDATE_CURRENT_CATEGORY, currentCategory: id });
+  };
 
   return (
     <div>
@@ -13,7 +25,7 @@ function CategoryMenu({ setCategory }) {
         <button
           key={item._id}
           onClick={() => {
-            setCategory(item._id);
+            handleCategoryClick(item._id);
           }}
         >
           {item.name}

@@ -1,22 +1,10 @@
-import React, { createContext, useContext } from "react";
-import { useProductReducer } from './reducers';
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import reducer from './reducers';
 
-const StoreContext = createContext();
-const { Provider } = StoreContext;
+const initialState = {products: [], categories: [], currentCategory: null, cart: [], cartOpen: false};
+const middleware = [thunk];
+const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));
 
-const StoreProvider = ({ value = [], ...props }) => {
-    const [state, dispatch] = useProductReducer({
-        products: [],
-        categories: [],
-        currentCategory: '',
-    });
-
-    console.log(state);
-    return <Provider value={[state, dispatch]} {...props} />;
-};
-
-const useStoreContext = () => {
-    return useContext(StoreContext);
-};
-
-export { StoreProvider, useStoreContext };
+export default store; 
